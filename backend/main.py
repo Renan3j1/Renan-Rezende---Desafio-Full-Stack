@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from datetime import datetime
+from uuid import UUID, uuid4
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from sqlalchemy import create_engine, text
@@ -11,7 +13,7 @@ engine = create_engine(DATABASE_URL)
 
 app = FastAPI(title="Notescreen API")
 
-
+# RETORNA TODAS AS NOTAS COM FILTROS OPCIONAIS DE SITE, EQUIPAMENTO, DATA INICIAL E DATA FINAL, PAGINAÇÃO.
 @app.get("/api/v1/notes")
 def list_all_notes(
     site: str | None = None,
@@ -60,4 +62,66 @@ def list_all_notes(
         "has_next": has_next,
     }
 
-# GET para /api/v1/notes?site=SP&page=2&page_size=20
+
+# --------------------------------------------------------------------------------------
+
+# CRIA UMA NOTA.
+@app.post("/api/v1/notes")
+def create_note(note: dict):
+    fields = ["site", "equipment", "variable", "timestamp", "author", "message"]
+    if any(field not in note for field in fields):
+        return "FALTA UM CAMPO NA REQUISIÇÃO"
+
+    note_id = uuid4()
+    query = text(
+        "INSERT INTO notes (id, site, equipment, variable, timestamp, author, message) "
+        "VALUES (:id, :site, :equipment, :variable, :timestamp, :author, :message) "
+        "RETURNING id, site, equipment, variable, timestamp, author, message"
+    )
+    params = {"id": note_id, **note}
+
+    with engine.begin() as con:
+        row = con.execute(query, params).mappings().one()
+
+    return dict(row)
+
+# --------------------------------------------------------------------------------------
+
+# DELETA UMA NOTA PELO ID.
+@app.delete("/api/v1/notes/{note_id}")
+def delete_note(note_id: UUID):
+    
+    with engine.begin() as con:
+        result = con.execute(
+            text("DELETE FROM notes WHERE id = :id"),
+            {"id": note_id},
+        )
+
+    if result.rowcount == 0:
+        return "NOTA NÃO ENCONTRADA"
+
+    return "NOTA DELETADA"
+# --------------------------------------------------------------------------------------
+
+# ATUALIZA UMA NOTA PELO ID.
+@app.put("/api/v1/notes/{note_id}")
+def update_note(note_id: UUID, note: dict):
+    fields = ["site", "equipment", "variable", "timestamp", "author", "message"]
+    if any(field not in note for field in fields):
+        return "FALTA UM CAMPO NA REQUISIÇÃO"
+
+    query = text(
+        "UPDATE notes SET site = :site, equipment = :equipment, "
+        "variable = :variable, timestamp = :timestamp, author = :author, "
+        "message = :message WHERE id = :id "
+        "RETURNING id, site, equipment, variable, timestamp, author, message"
+    )
+    params = {"id": note_id, **note}
+
+    with engine.begin() as con:
+        row = con.execute(query, params).mappings().one_or_none()
+
+    if row is None:
+        return "NOTA NÃO ENCONTRADA"
+
+    return dict(row)
