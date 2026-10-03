@@ -1,0 +1,31 @@
+{
+  "realm": "notescreen",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "notescreen-test",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "tester",
+      "enabled": true,
+      "email": "renan@teste.com",
+      "emailVerified": true,
+      "firstName": "Renan",
+      "lastName": "Teste",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "teste123",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

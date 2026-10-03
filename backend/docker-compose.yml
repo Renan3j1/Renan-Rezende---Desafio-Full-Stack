@@ -12,5 +12,20 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: notescreen-keycloak
+    restart: unless-stopped
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: notescreen
+      KC_BOOTSTRAP_ADMIN_PASSWORD: notescreen123
+    ports:
+      - "8080:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./keycloak/notescreen-realm.json:/opt/keycloak/data/import/notescreen-realm.json:ro
+
 volumes:
   pgdata:
+  keycloak_data:
