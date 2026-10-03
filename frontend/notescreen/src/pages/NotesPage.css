@@ -1,0 +1,152 @@
+.notes-page h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.notes-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.notes-filters label {
+  display: grid;
+  flex: 1 1 180px;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.notes-filters input {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.notes-filters button,
+.notes-pagination button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 4px;
+  background: #399f68;
+  color: #fff;
+  cursor: pointer;
+}
+
+.notes-filters button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.notes-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.notes-table th,
+.notes-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  vertical-align: middle;
+}
+
+.notes-table th {
+  font-size: 14px;
+}
+
+.notes-table td {
+  min-width: 120px;
+  font-size: 14px;
+}
+
+.notes-table td:last-child {
+  min-width: 220px;
+  white-space: pre-wrap;
+}
+
+.notes-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.notes-message {
+  padding: 16px 0;
+}
+
+.notes-error {
+  color: #b42318;
+}
+
+.notes-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.notes-pagination label,
+.notes-pagination form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-pagination select,
+.notes-pagination input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.notes-pagination input {
+  width: 72px;
+}
+
+.notes-pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: inherit;
+}
+
+.notes-pagination button img {
+  width: 8px;
+  height: 14px;
+  filter: brightness(0) saturate(100%) invert(66%) sepia(14%) saturate(1352%)
+    hue-rotate(93deg) brightness(92%) contrast(83%);
+}
+
+.notes-pagination button img.notes-pagination-double-arrow {
+  width: 18px;
+}
+
+.notes-pagination button img.notes-pagination-back {
+  transform: rotate(180deg);
+}
+
+.notes-pagination button:disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+
+.notes-pagination button:disabled img {
+  opacity: 0.45;
+}
