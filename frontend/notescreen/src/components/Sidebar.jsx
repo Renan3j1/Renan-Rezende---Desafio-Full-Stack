@@ -3,9 +3,6 @@ const items = [
   { label: 'ANALISE', icon: '/analytics.svg', path: '/analise' },
   { label: 'NOTAS', icon: '/notes.svg', path: '/notas' },
   { label: 'HISTORICO', icon: '/history.svg', path: '/historico' },
-  { label: 'MAPA', icon: '/map.svg', path: '/mapa' },
-  { label: 'DASHBOARD', icon: '/dashboard.svg', path: '/dashboard' },
-  { label: 'LOGS', icon: '/logs.svg', path: '/logs' },
 ]
 
 export default function Sidebar() {

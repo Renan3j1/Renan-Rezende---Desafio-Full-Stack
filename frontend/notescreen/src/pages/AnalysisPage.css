@@ -1,0 +1,72 @@
+.analysis-page h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.analysis-total,
+.analysis-history {
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.analysis-total {
+  display: grid;
+  width: min(100%, 280px);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.analysis-total span {
+  color: #555;
+  font-size: 14px;
+}
+
+.analysis-total strong {
+  font-size: 32px;
+}
+
+.analysis-history h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.analysis-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.analysis-chart-grid {
+  stroke: #e8e8e8;
+  stroke-width: 1;
+}
+
+.analysis-chart-label {
+  fill: #555;
+  font-size: 12px;
+}
+
+.analysis-chart-line {
+  fill: none;
+  stroke: #399f68;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.analysis-chart-dot {
+  fill: #399f68;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.analysis-message {
+  padding: 16px 0;
+}
+
+.analysis-error {
+  color: #b42318;
+}

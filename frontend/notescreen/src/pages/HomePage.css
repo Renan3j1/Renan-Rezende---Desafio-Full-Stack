@@ -1,0 +1,93 @@
+.home-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.home-intro {
+  padding: 40px;
+  border-radius: 10px;
+  background: #f0f7f2;
+}
+
+.home-eyebrow {
+  margin-bottom: 12px;
+  color: #399f68;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.home-intro h1 {
+  margin-bottom: 12px;
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.home-intro > p:last-child {
+  max-width: 680px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.home-create-button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #399f68;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.home-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.home-section-card {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.home-section-card img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.home-section-card h2 {
+  font-size: 18px;
+}
+
+.home-section-card p {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.home-section-card a {
+  margin-top: 4px;
+  color: #278451;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-section-card a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .home-intro {
+    padding: 28px 22px;
+  }
+}

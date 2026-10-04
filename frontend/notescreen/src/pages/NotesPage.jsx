@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import CreateNoteModal from '../components/CreateNoteModal.jsx'
 import './NotesPage.css'
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100]
@@ -31,6 +32,7 @@ export default function NotesPage() {
   const [hasNext, setHasNext] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [refresh, setRefresh] = useState(0)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -70,7 +72,7 @@ export default function NotesPage() {
 
     loadNotes()
     return () => controller.abort()
-  }, [appliedFilters, page, pageSize])
+  }, [appliedFilters, page, pageSize, refresh])
 
   function handleFilterChange(event) {
     setFilters((currentFilters) => ({
@@ -114,7 +116,17 @@ export default function NotesPage() {
 
   return (
     <section className="notes-page">
-      <h1>Notas</h1>
+      <div className="notes-heading">
+        <h1>Notas</h1>
+        <CreateNoteModal
+          buttonClassName="notes-create-button"
+          onCreated={() => {
+            setPage(1)
+            setPageInput('1')
+            setRefresh((current) => current + 1)
+          }}
+        />
+      </div>
 
       <form className="notes-filters" onSubmit={handleSubmit}>
         <label>

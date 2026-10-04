@@ -1,6 +1,25 @@
-.notes-page h1 {
+.notes-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
+  gap: 12px;
+}
+
+.notes-page h1 {
   font-size: 24px;
+}
+
+.notes-create-button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #399f68;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .notes-filters {
