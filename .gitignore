@@ -1,1 +1,4 @@
 backend/__pycache__/
+frontend/notescreen/dist/
+frontend/notescreen/node_modules/
+
