@@ -1,0 +1,43 @@
+.user-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-height: 44px;
+  margin: -8px 0 24px;
+}
+
+.user-header-email {
+  overflow: hidden;
+  color: #424a45;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-header-logout {
+  flex: 0 0 auto;
+  padding: 9px 14px;
+  border: 1px solid #399f68;
+  border-radius: 5px;
+  background: #fff;
+  color: #287c4c;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-header-logout:hover {
+  background: #f0f8f2;
+}
+
+@media (max-width: 600px) {
+  .user-header {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .user-header-email {
+    font-size: 12px;
+  }
+}

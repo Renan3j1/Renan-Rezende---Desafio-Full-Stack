@@ -5,13 +5,34 @@ from uuid import UUID, uuid4
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from sqlalchemy import create_engine, text
+from pydantic import BaseModel
+import requests
 
 load_dotenv(Path(__file__).parent / ".env")
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
+KEYCLOAK_URL = os.getenv("KEYCLOAK_URL", "http://localhost:8080").rstrip("/")
+KEYCLOAK_REALM = os.getenv("KEYCLOAK_REALM", "notescreen")
+KEYCLOAK_CLIENT_ID = os.getenv("KEYCLOAK_CLIENT_ID", "notescreen-test")
 
 app = FastAPI(title="Notescreen API")
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+class UserRegistrationRequest(BaseModel):
+    username: str
+    password: str
+    email: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+
+
+
 
 # RETORNA TODAS AS NOTAS COM FILTROS OPCIONAIS DE SITE, EQUIPAMENTO, DATA INICIAL E DATA FINAL, PAGINAÇÃO.
 @app.get("/api/v1/notes")
@@ -125,3 +146,59 @@ def update_note(note_id: UUID, note: dict):
         return "NOTA NÃO ENCONTRADA"
 
     return dict(row)
+# --------------------------------------------------------------------------------------
+
+# LOGA EM UM USUARIO.
+
+@app.post("/api/v1/auth/login")
+def login(credentials: LoginRequest):
+    response = requests.post(
+        f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token",
+        data={
+            "grant_type": "password",
+            "client_id": KEYCLOAK_CLIENT_ID,
+            "username": credentials.username,
+            "password": credentials.password,
+        },
+    )
+    response.raise_for_status()
+    return response.json()
+
+# --------------------------------------------------------------------------------------
+
+# REGISTRA UM NOVO USUÁRIO.
+
+@app.post("/api/v1/auth/register", status_code=201)
+def register_user(user: UserRegistrationRequest) -> dict[str, str]:
+    token_response = requests.post(
+        f"{KEYCLOAK_URL}/realms/master/protocol/openid-connect/token",
+        data={
+            "grant_type": "password",
+            "client_id": "admin-cli",
+            "username": os.getenv("KEYCLOAK_ADMIN_USERNAME"),
+            "password": os.getenv("KEYCLOAK_ADMIN_PASSWORD"),
+        },
+    )
+    token_response.raise_for_status()
+    access_token = token_response.json()["access_token"]
+    user_data = {
+        "username": user.username,
+        "enabled": True,
+        "credentials": [
+            {"type": "password", "value": user.password, "temporary": False}
+        ],
+    }
+    if user.email:
+        user_data["email"] = user.email
+    if user.first_name:
+        user_data["firstName"] = user.first_name
+    if user.last_name:
+        user_data["lastName"] = user.last_name
+
+    response = requests.post(
+        f"{KEYCLOAK_URL}/admin/realms/{KEYCLOAK_REALM}/users",
+        json=user_data,
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    response.raise_for_status()
+    return {"message": "Usuário criado com sucesso."}

@@ -1,5 +1,5 @@
 const items = [
-  { label: 'HOME', icon: '/home.svg', path: '/' },
+  { label: 'HOME', icon: '/home.svg', path: '/home' },
   { label: 'ANALISE', icon: '/analytics.svg', path: '/analise' },
   { label: 'NOTAS', icon: '/notes.svg', path: '/notas' },
   { label: 'HISTORICO', icon: '/history.svg', path: '/historico' },
